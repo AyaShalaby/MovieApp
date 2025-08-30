@@ -1,0 +1,143 @@
+/*navbar*/
+.navbar {
+  background-color: #ffe353;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  height:9%;
+  text-align: left;
+}
+
+
+.navbar-toggler {
+  border: none;
+  outline: none !important;
+  box-shadow: none !important;
+  font-size: 28px; 
+  color: #333; 
+  background: transparent; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navbar-toggler:hover {
+  color: #000; }
+
+@media (max-width: 991px) {
+  .navbar-nav {
+    background: #f5f9fa;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+
+  .navbar-nav .nav-item {
+    border-bottom: 1px solid #3c3c3c;
+    padding-left: 12px;
+  }
+
+  .navbar-nav .nav-item:last-child {
+    border-bottom: none;
+    padding-left: 0;
+  }
+
+  .nav-link {
+    padding: 0.75rem 0;
+  }
+}
+
+/* re style TV shows link */
+.tv-brand {
+  font-size: 18px;
+}
+
+/*welcome*/
+.welcome{
+    width: 97%;
+    background-color: #e5e4e4;
+    height: 300px;
+}
+/*count-btn*/
+.count-btn{
+  background-color: transparent;
+    color: black;
+}
+
+/*card icon*/
+.icon-btn {
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.icon-btn i {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 17px;    
+  height: 15px;  
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+
+
+
+/* .icon:hover{
+    background-color: #ffe353;
+
+} */
+/*watch-list btn*/
+.btn-style{
+    background-color: #ffe353;
+    color: black;
+}
+.btn-style:active{
+     background-color: #ffe353 !important;
+    color: black;
+
+}
+.btn-style:hover{
+     background-color: #ffe353 !important;
+    color: black;
+ 
+}
+.img{
+    width: 450px;
+}
+
+#imgg {
+  width: 200px;
+  height: 300px;
+  flex-shrink: 0; 
+}
+
+#imgg img {
+  height: 100%;   
+  object-fit: cover;
+}
+.body {
+  max-height: 300px;   
+  overflow-y: auto;    
+}
+/*wishlist*/
+.watchlist-card{
+    width:600px ;
+  
+
+}
+
+.card-text, .card-title {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/*spacing*/
+.no-horizontal-scroll {
+  overflow-x: hidden;
+}
+body {
+  overflow-x: hidden;
+}
+

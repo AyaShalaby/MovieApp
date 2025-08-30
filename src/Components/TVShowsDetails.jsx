@@ -1,0 +1,149 @@
+import  { useContext, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
+import { MovieContext } from "./Context";
+
+export default function TVShowDetails() {
+  const { id } = useParams();
+  const {
+    fetchTVShowDetails,
+    selectedTVShow,
+    loading,
+    toggleWatchlist,
+    watchlist,
+    fetchTVRecommendations,
+    tvRecommendations,
+  } = useContext(MovieContext);
+
+  useEffect(() => {
+    if (!selectedTVShow || selectedTVShow.id.toString() !== id) {
+      fetchTVShowDetails(id);
+    }
+    if (id) {
+      fetchTVRecommendations(id);
+    }
+  }, [id, fetchTVShowDetails, fetchTVRecommendations, selectedTVShow]);
+
+ 
+
+  if (loading || !selectedTVShow) {
+    return <h2 className="text-center my-4">Loading...</h2>;
+  }
+
+  
+
+  return (
+    <div className="container movie-details-page my-5">
+      <div className="row">
+        <div className="col-12 col-md-4 text-center">
+          <img
+            src={`https://image.tmdb.org/t/p/w500${selectedTVShow.poster_path}`}
+            alt={selectedTVShow.name}
+            className="img-fluid rounded shadow h-75"
+            style={{ maxHeight: "600px" }}
+          />
+        </div>
+        <div className="col-12 col-md-8">
+          <div className="d-flex justify-content-between align-items-center max-h-75">
+            <h2>{selectedTVShow.name}</h2>
+            <div
+              onClick={() => toggleWatchlist(selectedTVShow)}
+              style={{ cursor: "pointer" }}
+            >
+              <i
+  className={`fs-3 fa-heart icon ${
+    watchlist.some((m) => m.id === selectedTVShow.id)
+      ? "fa-solid text-warning fs-2"
+      : "fa-regular"
+  }`}
+/>
+
+            </div>
+          </div>
+          <p className="text-muted">{selectedTVShow.first_air_date}</p>
+          <div className="d-flex align-items-center mb-3">
+                      <i className="fa-solid fa-star fs-6 mx-1 text-warning"></i>
+            <span className="h5 mb-0">
+              {selectedTVShow.vote_average
+                ? selectedTVShow.vote_average.toFixed(1)
+                : "N/A"}
+            </span>
+            <span className="text-muted ms-2 small">
+                  ({selectedTVShow.vote_count} votes)
+                </span>
+          </div>
+          <p>{selectedTVShow.overview}</p>
+          <div className="mb-3">
+            {selectedTVShow.genres &&
+              selectedTVShow.genres.map((genre) => (
+                <span
+                  key={genre.id}
+                  className="badge bg-warning me-2 text-black"
+                >
+                  {genre.name}
+                </span>
+              ))}
+          </div>
+          <p>
+            <strong>Seasons:</strong> {selectedTVShow.number_of_seasons}
+          </p>
+          <p>
+            <strong>Language:</strong> {selectedTVShow.original_language}{" "}
+          </p>
+           <p className="mb-2">
+            <strong>Production:</strong>{" "}
+            {selectedTVShow.production_companies?.map((c) => c.name).join(", ")}
+          </p>
+          <div className="mt-3">
+            <img
+              src={`https://image.tmdb.org/t/p/w200${selectedTVShow.backdrop_path}`}
+              alt={selectedTVShow.name}
+              className="img-fluid rounded shadow"
+              style={{ maxHeight: "150px" }}
+            />
+          </div>
+        </div>
+      </div>
+      <hr className="my-5" />
+      <h3>Recommendations</h3>
+      {tvRecommendations.length > 0 ? (
+        <div className="row g-4">
+          {tvRecommendations.slice(0, 8).map((rec) => (
+            <div key={rec.id} className="col-6 col-md-3 col-lg-2 mb-4">
+              <div className="card h-100 border-0">
+                <Link to={`/tv-details/${rec.id}`}>
+                  <img
+                    src={`https://image.tmdb.org/t/p/w500${rec.poster_path}`}
+                    alt={rec.name}
+                    className="card-img-top rounded-3"
+                  />
+                </Link>
+                <div className="card-body d-flex align-items-center justify-content-between">
+                  <div className="details">
+                    <p className="card-title fw-bold">{rec.name}</p>
+                    <p className="card-text">{rec.first_air_date}</p>
+                  </div>
+                  <button
+                    className="icon-btn"
+                    onClick={() => toggleWatchlist(rec)}
+                  >
+                    <i
+                      className={`fs-5 fa-heart icon ${
+                        watchlist.some((item) => item.id === rec.id)
+                          ? "fa-solid text-warning"
+                          : "fa-regular"
+                      }`}
+                    ></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="alert alert-info text-center">
+          No recommendations found.
+        </div>
+      )}
+    </div>
+  );
+}
