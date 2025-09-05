@@ -1,16 +1,16 @@
 import React, { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { MovieContext } from "./Context";
+import { MovieContext } from "../Context/Context";
 export default function Navbar() {
   const { count } = useContext(MovieContext);
   return (
     <>
       <nav className="navbar navbar-expand-lg">
         <div className="container-fluid">
-          <NavLink className="navbar-brand fw-semibold" to="/">
+          <NavLink className="navbar-brand fw-semibold color-links" to="/">
             Movie App
           </NavLink>
-          <NavLink className="navbar-brand fw-semibold mx-2" to="/tvshows">
+          <NavLink className="navbar-brand fw-semibold mx-2 color-links" to="/tvshows">
             TVShows
           </NavLink>
 
@@ -28,14 +28,14 @@ export default function Navbar() {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
               <li className="nav-item d-flex">
-                <Link
-                  className="nav-link active float-lg-end me-2"
+                <Link 
+                  className="nav-link active float-lg-end me-2 color-links"
                   aria-current="page"
                   to="watchList"
                 >
-                  <i className="fa-solid fa-heart fs-5"></i> Watchlist
+                  <i className="fa-solid fa-heart fs-5 color-links mx-2"></i>  Watchlist
                 </Link>
-                <button className="count-btn border-0">{count}</button>
+                <button className="count-btn border-0 color-links">{count}</button>
               </li>
             </ul>
           </div>

@@ -1,14 +1,14 @@
 import './App.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Layout from './Components/Layout'
-import WatchList from './Components/WatchList'
-import MovieDetails from './Components/MovieDetails'
-import Home from './Components/Home'
-import { MovieProvider } from './Components/Context'
-import Search from './Components/Search'
-import TVShows from './Components/TVShows';
-import TVShowsDetails from './Components/TVShowsDetails'
-import NotFound from './Components/NotFound'
+import WatchList from './Pages/WatchList'
+import MovieDetails from './Pages/MovieDetails'
+import Home from './Pages/Home'
+import { MovieProvider } from './Context/Context'
+import Search from './Pages/Search'
+import TVShows from './Pages/TVShows';
+import TVShowsDetails from './Pages/TVShowsDetails'
+import NotFound from './Pages/NotFound'
+import Layout from './Layout/Layout'
 
 
 
@@ -16,7 +16,7 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Layout />,
+      element: <Layout/>,
       children: [
         {
           index: true,

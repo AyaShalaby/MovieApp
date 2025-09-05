@@ -1,18 +1,44 @@
-import  { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { MovieContext } from "./Context";
+import { MovieContext } from "../Context/Context";
 
 export default function TVShowDetails() {
   const { id } = useParams();
-  const {
-    fetchTVShowDetails,
-    selectedTVShow,
-    loading,
-    toggleWatchlist,
-    watchlist,
-    fetchTVRecommendations,
-    tvRecommendations,
-  } = useContext(MovieContext);
+  const apiKey = import.meta.env.VITE_TMDB_KEY;
+  const [selectedTVShow, setSelectedTVShow] = useState(null);
+  const [tvRecommendations, setTvRecommendations] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const { toggleWatchlist, watchlist } = useContext(MovieContext);
+  // TV Shows Details
+  const fetchTVShowDetails = async (id) => {
+    setLoading(true);
+    try {
+      const res = await fetch(
+        `https://api.themoviedb.org/3/tv/${id}?api_key=${apiKey}&language=en-US`
+      );
+      const data = await res.json();
+      setSelectedTVShow(data);
+    } catch (error) {
+      console.error("Error fetching TV show details:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  //
+  // fetch TV Show recommendations
+  const fetchTVRecommendations = async (tvId) => {
+    try {
+      const res = await fetch(
+        `https://api.themoviedb.org/3/tv/${tvId}/recommendations?api_key=${apiKey}&language=en-US`
+      );
+      const data = await res.json();
+      setTvRecommendations(data.results || []);
+    } catch (error) {
+      console.error("Error fetching TV show recommendations:", error);
+    }
+  };
 
   useEffect(() => {
     if (!selectedTVShow || selectedTVShow.id.toString() !== id) {
@@ -23,16 +49,12 @@ export default function TVShowDetails() {
     }
   }, [id, fetchTVShowDetails, fetchTVRecommendations, selectedTVShow]);
 
- 
-
   if (loading || !selectedTVShow) {
     return <h2 className="text-center my-4">Loading...</h2>;
   }
 
-  
-
   return (
-    <div className="container movie-details-page my-5">
+    <div className="container movie-details-page my-5 text">
       <div className="row">
         <div className="col-12 col-md-4 text-center">
           <img
@@ -50,35 +72,31 @@ export default function TVShowDetails() {
               style={{ cursor: "pointer" }}
             >
               <i
-  className={`fs-3 fa-heart icon ${
-    watchlist.some((m) => m.id === selectedTVShow.id)
-      ? "fa-solid text-warning fs-2"
-      : "fa-regular"
-  }`}
-/>
-
+                className={`fs-3 fa-heart icon ${
+                  watchlist.some((m) => m.id === selectedTVShow.id)
+                    ? "fa-solid color fs-2"
+                    : "fa-regular text"
+                }`}
+              />
             </div>
           </div>
           <p className="text-muted">{selectedTVShow.first_air_date}</p>
           <div className="d-flex align-items-center mb-3">
-                      <i className="fa-solid fa-star fs-6 mx-1 text-warning"></i>
+            <i className="fa-solid fa-star fs-6 mx-1 color-links"></i>
             <span className="h5 mb-0">
               {selectedTVShow.vote_average
                 ? selectedTVShow.vote_average.toFixed(1)
                 : "N/A"}
             </span>
             <span className="text-muted ms-2 small">
-                  ({selectedTVShow.vote_count} votes)
-                </span>
+              ({selectedTVShow.vote_count} votes)
+            </span>
           </div>
           <p>{selectedTVShow.overview}</p>
           <div className="mb-3">
             {selectedTVShow.genres &&
               selectedTVShow.genres.map((genre) => (
-                <span
-                  key={genre.id}
-                  className="badge bg-warning me-2 text-black"
-                >
+                <span key={genre.id} className="badge bg-new me-2 text">
                   {genre.name}
                 </span>
               ))}
@@ -89,7 +107,7 @@ export default function TVShowDetails() {
           <p>
             <strong>Language:</strong> {selectedTVShow.original_language}{" "}
           </p>
-           <p className="mb-2">
+          <p className="mb-2">
             <strong>Production:</strong>{" "}
             {selectedTVShow.production_companies?.map((c) => c.name).join(", ")}
           </p>
@@ -109,7 +127,7 @@ export default function TVShowDetails() {
         <div className="row g-4">
           {tvRecommendations.slice(0, 8).map((rec) => (
             <div key={rec.id} className="col-6 col-md-3 col-lg-2 mb-4">
-              <div className="card h-100 border-0">
+              <div className="card h-100 border-0 text">
                 <Link to={`/tv-details/${rec.id}`}>
                   <img
                     src={`https://image.tmdb.org/t/p/w500${rec.poster_path}`}
@@ -129,8 +147,8 @@ export default function TVShowDetails() {
                     <i
                       className={`fs-5 fa-heart icon ${
                         watchlist.some((item) => item.id === rec.id)
-                          ? "fa-solid text-warning"
-                          : "fa-regular"
+                          ? "fa-solid color"
+                          : "fa-regular text"
                       }`}
                     ></i>
                   </button>

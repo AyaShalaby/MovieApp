@@ -1,6 +1,6 @@
 /*navbar*/
 .navbar {
-  background-color: #ffe353;
+  background-color:#7C4585;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   height:9%;
   text-align: left;
@@ -80,29 +80,23 @@
   border-radius: 50%;
   transition: all 0.2s ease;
 }
-
-
-
-
-/* .icon:hover{
-    background-color: #ffe353;
-
-} */
-/*watch-list btn*/
-.btn-style{
-    background-color: #ffe353;
-    color: black;
+.color{
+  color: #e42c8b !important;
 }
-.btn-style:active{
-     background-color: #ffe353 !important;
-    color: black;
+.color-links{
+  color: #F8B55F!important;
+}
+.text{
+  color: #3D365C !important;
+}
+.bg-new{
+  background-color: #F8B55F !important;
+}
 
-}
-.btn-style:hover{
-     background-color: #ffe353 !important;
-    color: black;
- 
-}
+
+
+
+
 .img{
     width: 450px;
 }
@@ -140,4 +134,4 @@
 body {
   overflow-x: hidden;
 }
-
+/*movieDetails*/
