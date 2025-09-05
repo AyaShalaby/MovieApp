@@ -175,7 +175,7 @@ export default function Home() {
                   className="page-link border-0"
                   style={{
                     backgroundColor:
-                      pageNumber === currentPage ? "#7C4585" : "transparent",
+                      pageNumber === currentPage ? "#F8B55F" : "transparent",
                     color: "black",
                   }}
                   onClick={() => goToPage(currentPage)}
@@ -202,7 +202,7 @@ export default function Home() {
                   style={{
                     backgroundColor:
                       pageNumber === Math.min(totalPages, 500)
-                        ? "#7C4585"
+                        ? "#F8B55F"
                         : "transparent",
                     color: "black",
                   }}
